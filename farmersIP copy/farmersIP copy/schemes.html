@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>योजनाएँ - किसान सहायक प्लेटफ़ॉर्म</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background-color: #f9f2e7;
+      color: #5a3e1b;
+    }
+    h1 {
+      text-align: center;
+      color: #d2691e;
+      margin-bottom: 20px;
+    }
+    label, select, button {
+      display: block;
+      margin: 10px auto;
+      font-size: 18px;
+      width: 80%;
+      max-width: 400px;
+    }
+    select, button {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #aa7d53;
+    }
+    button {
+      background-color: #d2691e;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #a0522d;
+    }
+    .schemes-list {
+      margin-top: 30px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .scheme-item {
+      background-color: #fff3e0;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #d9b47c;
+    }
+    iframe {
+      display: block;
+      margin: 20px auto;
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    .video-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 18px;
+      color: #d2691e;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>किसान योजनाएँ</h1>
+  <label for="state">राज्य चुनें:</label>
+  <select id="state">
+    <option value="">--राज्य चुनें--</option>
+    <option value="uttar_pradesh">उत्तर प्रदेश</option>
+    <option value="maharashtra">महाराष्ट्र</option>
+    <option value="bihar">बिहार</option>
+    <option value="karnataka">कर्नाटक</option>
+  </select>
+  <label for="crop">फसल चुनें:</label>
+  <select id="crop">
+    <option value="">--फसल चुनें--</option>
+    <option value="wheat">गेहूं</option>
+    <option value="rice">चावल</option>
+    <option value="cotton">कपास</option>
+    <option value="maize">मक्का</option>
+  </select>
+  <button onclick="showSchemes()">योजनाएँ दिखाएं</button>
+
+  <div class="schemes-list" id="schemesList"></div>
+
+  <h2 style="text-align:center; margin-top: 40px; color: #d2691e;">शैक्षिक वीडियो</h2>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/fF1paMQvYdk" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+
+  <div class="video-link" onclick="window.location.href='videos.html'">अधिक वीडियो देखें</div>
+
+  <script>
+    const schemesData = {
+      uttar_pradesh: {
+        wheat: [
+          'PM-KISAN: ₹6000 वार्षिक आय सहायता',
+          'मंडी में न्यूनतम समर्थन मूल्य (MSP) सुनिश्चित',
+          'फसल बीमा योजना'
+        ],
+        rice: [
+          'PMKSY: सिंचाई सुविधा',
+          'उन्नत बीज वितरण',
+          'कृषि उपकरण सब्सिडी'
+        ]
+      },
+      maharashtra: {
+        cotton: [
+          'कपास खरीद गारंटी',
+          'ट्रैक्टर सब्सिडी',
+          'कृषि ऋण माफी'
+        ],
+        maize: [
+          'फसल बीमा',
+          'सौर ऊर्जा योजना (KUSUM)',
+          'जल संरक्षण योजना'
+        ]
+      }
+    };
+
+    function showSchemes() {
+      const state = document.getElementById('state').value;
+      const crop = document.getElementById('crop').value;
+      const schemesList = document.getElementById('schemesList');
+      schemesList.innerHTML = '';
+
+      if (!state || !crop) {
+        alert('कृपया राज्य और फसल दोनों चुनें');
+        return;
+      }
+
+      const schemes = (schemesData[state] && schemesData[state][crop]) || [];
+      if (schemes.length === 0) {
+        schemesList.innerHTML = '<p>इस राज्य और फसल के लिए कोई योजना उपलब्ध नहीं है।</p>';
+        return;
+      }
+
+      schemes.forEach(scheme => {
+        const div = document.createElement('div');
+        div.className = 'scheme-item';
+        div.textContent = scheme;
+        schemesList.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
